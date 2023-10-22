@@ -1,0 +1,19 @@
+body .sidebar-open
+{
+    width: 300px;
+    transition: width 0.3s;
+}
+
+body .sidebar-collapsed
+{
+    width: 80px;
+    transition: width 0.3s;
+}
+
+body main #adminpanel
+{
+    margin-top: 56px; 
+    margin-left: 320px; 
+    margin-right:20px
+}
+
