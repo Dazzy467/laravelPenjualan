@@ -20,6 +20,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <script src="https://kit.fontawesome.com/0181a7fc6f.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -98,40 +99,54 @@
             
 
             <script>
-                const sidebar = document.getElementById('sidebar');
-                const toggleButton = document.getElementById('toggleSidebar');
-                const sidebarCollapse = document.getElementById('sidebarCollapse');
-                const labels = document.getElementsByClassName('nav-label');
-                const content = document.getElementById('adminpanel');
-                const sidebarToggleDiv = document.getElementById('sidebarToggleDiv');
+                const sidebar = $('#sidebar');
+                const toggleButton = $('#toggleSidebar');
+                const sidebarCollapse = $('#sidebarCollapse');
+                const labels = $('.nav-label');
+                const content = $('#adminpanel');
+                const sidebarToggleDiv = $("#sidebarToggleDiv");
 
-                toggleButton.addEventListener('click', () => {
-                    if (sidebar.classList.contains('sidebar-open')) {
-                        sidebar.classList.remove('sidebar-open');
-                        sidebar.classList.add('sidebar-collapsed');
-
-                        for (let i = 0; i < labels.length; i++) {
-                            labels[i].style.display = 'none';
-                            
-                            
-                        }
-                        sidebarToggleDiv.classList.remove('justify-content-end');
-                        sidebarToggleDiv.classList.add('justify-content-center');
-                        content.style.marginLeft = '90px';
+                var isLessWidth = false;
+                var isMinimized = false;
+                
+                $(document).ready(
+                    function()
+                    {
+                        toggleButton.click(function ()
+                        {
+                            content.toggleClass('content-minimized');
+                            labels.each(function(){
+                                $(this).toggleClass('nav-label-minimized');
+                            });
+                            sidebar.toggleClass('sidebar-collapsed');
+                            sidebarToggleDiv.toggleClass('justify-content-center justify-content-end');
+                            isMinimized = !isMinimized;
+                        })
                         
-                        
-                    } else {
-                        sidebar.classList.remove('sidebar-collapsed');
-                        sidebar.classList.add('sidebar-open');
-                        for (let i = 0; i < labels.length; i++) {
-                            labels[i].style.display = 'block';
-                            
-                        }
-                        content.style.marginLeft = '320px';
-                        sidebarToggleDiv.classList.remove('justify-content-center');
-                        sidebarToggleDiv.classList.add('justify-content-end');
+                        $(window).resize(function()
+                        {
+                            if ($(window).width() < 768 && !isLessWidth)
+                            {
+                                if (isMinimized)
+                                    sidebarToggleDiv.removeClass('d-flex justify-content-center pt-2');
+                                else sidebarToggleDiv.removeClass('d-flex justify-content-end pt-2');
+                                sidebarToggleDiv.css('display','none');
+                                $('#navlink').removeClass('mt-5');
+                                console.log('Hello');
+                                isLessWidth = true;
+                            }
+                            else if ($(window).width() > 768 && isLessWidth){
+                                if (isMinimized)
+                                    sidebarToggleDiv.addClass('d-flex justify-content-center pt-2');
+                                else 
+                                    sidebarToggleDiv.addClass('d-flex justify-content-end pt-2');
+                                $('#navlink').addClass('mt-5');
+                                isLessWidth = false;
+                            }
+                        });
                     }
-                });
+                );
+
             </script>
         </main>
     </div>

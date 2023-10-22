@@ -1,3 +1,70 @@
-.sidebar{
-    width: 70px;
+body
+{
+    margin: 0;
+    padding: 0;
+    height: auto;
+}
+body .sidebar
+{
+    height: calc(100% - 40px);
+    width: 300px;
+    transition: width 0.3s;
+}
+
+body .sidebar-collapsed
+{
+    width: 80px;
+    transition: width 0.3s;
+}
+
+body main #adminpanel
+{
+    margin-top: 56px; 
+    margin-left: 320px; 
+    margin-right:20px;
+    transition: 0.3s;
+}
+
+body main #adminpanel.content-minimized
+{
+    margin-top: 56px; 
+    margin-left: 90px; 
+    margin-right:20px;
+    transition: 0.3s;
+}
+
+.nav-label
+{
+    display: block;
+}
+
+.nav-label.nav-label-minimized
+{
+    display: none;
+}
+
+@media (max-width:768px)
+{
+    body .sidebar
+    {
+        width: 80px;
+        transition: width 0.3s;
+    }
+    .nav-label{
+        display: none;
+    }
+
+    body main #adminpanel
+    {
+        margin-top: 56px; 
+        margin-left: 90px; 
+        margin-right:20px;
+        transition: 0.3s;
+    }
+
+    body nav .navlink{
+        transition: all 0.3s;
+    }
+
+
 }
