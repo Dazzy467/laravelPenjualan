@@ -4,9 +4,14 @@ body
     padding: 0;
     height: auto;
 }
+
+a{
+    text-decoration: none !important; 
+}
+
 body .sidebar
 {
-    height: calc(100% - 40px);
+    height: calc(100% - 50px);
     width: 300px;
     transition: width 0.3s;
 }

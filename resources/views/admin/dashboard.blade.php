@@ -52,10 +52,10 @@
                                     <td>User</td>
                                 @endif
                                 <td>
-                                    <div class="d-flex justify-content-center flex-nowrap">
+                                    <div class="d-flex justify-content-center">
                                         <div>
-                                            <a href="{{__('/EditUser/'.$val->id)}}" class="btn btn-primary">Edit</a>
-                                            <a href="{{__('/DeleteUser/'.$val->id)}}" class="btn btn-danger">Hapus</a>
+                                            <a href="{{__('/EditUser/'.$val->id)}}" class="fa-solid fa-pen-to-square pe-2 text-primary" style="font-size: 24px;"></a>
+                                            <a href="{{__('/DeleteUser/'.$val->id)}}" class="fa-solid fa-trash-can text-danger" style="font-size: 24px;"></a>
                                         </div>
                                         
                                     </div>
