@@ -5,24 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Penjualan extends Model
+class ItemSuplai extends Model
 {
     use HasFactory;
-    protected $table = 'penjualan';
+
+    protected $table = 'itemsuplai';
+
     protected $fillable = [
-        'idNota',
+        'idSupplier',
+        'idBarang',
         'jumlahBarang',
-        'totalHarga',
-        'idBarang'
+        'tanggalMasuk'
     ];
 
-    public function Nota()
-    {
-        return $this->belongsTo(Nota::class,'idNota');
-    }
-    
     public function Barang()
     {
         return $this->hasOne(Barang::class,'idBarang');
+    }
+
+    public function Supplier()
+    {
+        return $this->hasOne(Supplier::class,'idSupplier');
     }
 }

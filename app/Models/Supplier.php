@@ -17,8 +17,8 @@ class Supplier extends Model
         'noTelp',
     ];
 
-    public function Barang()
+    public function ItemSuplai()
     {
-        return $this->hasMany(Barang::class,'idSupplier');
+        return $this->hasMany(ItemSuplai::class,'idSupplier');
     }
 }

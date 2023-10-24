@@ -17,8 +17,8 @@ class Barang extends Model
         'idSupplier'
     ];
 
-    public function Supplier()
+    public function itemSuplai()
     {
-        return $this->belongsTo(Supplier::class,'idSupplier');
+        return $this->belongsTo(ItemSuplai::class,'idBarang');
     }
 }
