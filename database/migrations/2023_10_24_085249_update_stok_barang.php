@@ -11,14 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        // Update stok barang saat disuplai
         DB::unprepared('
-            CREATE TRIGGER tr_Update_Stok_Barang AFTER INSERT ON `itemsuplai`
+            CREATE TRIGGER tr_Update_Stok_Barang_Supplied AFTER INSERT ON `itemsuplai`
             FOR EACH ROW
             BEGIN
                 UPDATE barang SET stokBarang = stokBarang + NEW.jumlahBarang WHERE idBarang = NEW.idBarang;
             END
         ');
+        
+        // Update stok barang saat nota dibuat
+        DB::unprepared('
+        CREATE TRIGGER tr_Update_Stok_Barang_Terjual AFTER INSERT ON `penjualan`
+        FOR EACH ROW
+        BEGIN
+            UPDATE barang SET stokBarang = stokBarang - NEW.jumlahBarang WHERE idBarang = NEW.idBarang;
+        END
+    ');
+
     }
 
     /**
@@ -27,6 +37,7 @@ return new class extends Migration
     public function down(): void
     {
         //
-        DB::unprepared('DROP TRIGGER `tr_Update_Stok_Barang`');
+        DB::unprepared('DROP TRIGGER `tr_Update_Stok_Barang_Supplied`');
+        DB::unprepared('DROP TRIGGER `tr_Update_Stok_Barang_Terjual`');
     }
 };

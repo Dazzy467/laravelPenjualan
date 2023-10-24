@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Penjualan extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'penjualan';
     protected $fillable = [
         'idNota',

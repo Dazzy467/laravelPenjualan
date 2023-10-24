@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Barang extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'barang';
 
     protected $fillable = [
         'namaBarang',
         'stokBarang',
         'hargaBarang',
-        'idSupplier'
     ];
 
     public function itemSuplai()

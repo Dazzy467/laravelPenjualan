@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ItemSuplai extends Model
 {
     use HasFactory;
-
+    public $timestamps = false;
     protected $table = 'itemsuplai';
 
     protected $fillable = [

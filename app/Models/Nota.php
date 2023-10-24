@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Nota extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'nota';
 
     protected $fillable = [
