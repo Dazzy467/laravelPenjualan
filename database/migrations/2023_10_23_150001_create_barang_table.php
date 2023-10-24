@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string('namaBarang',30);
             $table->integer('stokBarang');
             $table->integer('hargaBarang');
-            $table->foreignId('idSupplier')->constrained('supplier');
-            $table->timestamps();
+            $table->foreignId('idSupplier')->constrained('supplier','idSupplier');
         });
     }
 

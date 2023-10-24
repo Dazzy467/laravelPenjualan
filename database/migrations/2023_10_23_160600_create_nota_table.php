@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('nota', function (Blueprint $table) {
             $table->bigIncrements('idNota');
-            $table->foreignId('idBarang')->constrained('barang');
-            $table->foreignId('id')->constrained('users');
+            $table->foreignId('idUser')->constrained('users','idUser');
             $table->date('tanggalPembelian');
-            $table->timestamps();
         });
     }
 

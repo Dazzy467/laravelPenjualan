@@ -43,4 +43,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected function Nota()
+    {
+        return $this->hasMany(Nota::class,'idUser');
+    }
 }
