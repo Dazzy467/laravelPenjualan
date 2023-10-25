@@ -15,11 +15,20 @@ class check_role
      */
     public function handle(Request $request, Closure $next, $roles): Response
     {
-
-        if (Auth::check() && Auth::user()->role == $roles) {
+        // Admin bisa akses semua fitur
+        if (Auth::check() && Auth::user()->role == $roles || Auth::user()->role == 0) {
             return $next($request);
         }
+
+        else {
+            if ($roles == 0 && Auth::user()->role != $roles)
+                return redirect()->route('home')->with('error', 'Hanya admin yang boleh masuk');
+            else if ($roles == 1 && Auth::user()->role != $roles)
+                return redirect()->route('home')->with('error', 'Hanya kasir yang boleh masuk');
+            else if ($roles == 2 && Auth::user()->role != $roles)
+                return redirect()->route('home')->with('error', 'Hanya admin gudang yang boleh masuk');
+        }
         // return redirect('/')->with('error','Access denied');
-        return redirect()->route('home')->with('error', 'Only admin are prohibited');
+
     }
 }
