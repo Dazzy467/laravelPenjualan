@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
-        // Schema::table('user',function ($table){
-        //     $table->rename
-        // });
-
-        Schema::rename('users','pengguna');
+        Schema::create('barang', function (Blueprint $table) {
+            $table->bigIncrements('idBarang');
+            $table->string('namaBarang',30);
+            $table->integer('stokBarang');
+            $table->integer('hargaBarang');
+        });
     }
 
     /**
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('barang');
     }
 };
