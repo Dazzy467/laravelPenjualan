@@ -113,6 +113,18 @@ class KasirController extends Controller
 
     public function hapusBarangTransaksi(Request $request)
     {
+        $this->penjualanInstance = $request->session()->get('penjualanInstance');
+        foreach($this->penjualanInstance as $key => $valP)
+        {
+            if ($valP->Barang->namaBarang == $request->namaBarang)
+            {
+                unset($this->penjualanInstance[$key]);
+            }
+        }
+
+        $this->penjualanInstance = array_values($this->penjualanInstance);
+        $request->session()->put('penjualanInstance',$this->penjualanInstance);
+        return response()->json(array("instance"=> $this->penjualanInstance),200);
         
     }
 

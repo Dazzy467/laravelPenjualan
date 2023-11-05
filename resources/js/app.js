@@ -122,8 +122,9 @@ function TambahBarangKeTransaksi()
     });
 }
 
-function HapusBarangTransaksi()
+function HapusBarangTransaksi(namaBarang)
 {
+    console.log("ini: " + namaBarang);
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -131,11 +132,12 @@ function HapusBarangTransaksi()
         type: "POST",
         url: "/kasir/HapusBarangTransaksi",
         data: {
+            namaBarang: namaBarang,
             token : '<?php echo csrf_token() ?>'
         },
         dataType: 'json',
         success: function (data) {
-
+            console.log(data.instance);
         }
     });
 }
@@ -166,11 +168,15 @@ $(document).ready(
             TambahBarangKeTransaksi();
         });
 
-        $('#transactionDeleteRowBtn').click(function ()
-        {
-            tabelTransaksi.row($(this).parents('TR')).remove().draw();
-        }
-        );
+        $(document).on('click', '#transactionDeleteRowBtn', function(){
+            var row = $(this).closest('tr');
+            var data = row.find('td').map(function(){
+                return $(this).text();
+            }).get();
+            console.log(data[0]); // ini akan mencetak data dari baris tersebut ke konsol
+            HapusBarangTransaksi(data[0]);
+            row.remove();
+        });
 
         // $('#tambahBarangTransaksiForm').on('submit', function(e) {
         //     e.preventDefault();
