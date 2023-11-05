@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Barang;
+use App\Models\Penjualan;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -13,8 +16,9 @@ class AdminController extends Controller
     {
         // Logic for the admin dashboard
         $user = User::all();
-        
-        return view('admin/dashboard',['user' => $user]);
+        $barang = Barang::all();
+        $penjualan = Penjualan::all();
+        return view('admin/dashboard',['user' => $user,'produk' => $barang,'penjualan' => $penjualan]);
     }
 
 
@@ -29,9 +33,15 @@ class AdminController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'confirmed'],
             'role' => ['required','integer','in:0,1']
         ]);
+    }
+
+    public function manageuser()
+    {
+        $user = User::all();
+        return view('admin.manageuser',['user' => $user]);
     }
 
     public function adduser_form()
@@ -43,9 +53,9 @@ class AdminController extends Controller
     {
         $user = User::findOrFail($userID);
 
-        if ($user->id == 1)
+        if ($user->idUser == 1)
         {
-            return redirect()->route('admin.show')->with('error', 'Default Admin cannot be edited');
+            return redirect()->route('admin.manageuser')->with('error', 'Akun admin tidak boleh diedit!');
 
         }
         return view('admin/edituser',['user' => $user]);
@@ -56,7 +66,7 @@ class AdminController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'confirmed'],
             'role' => ['required','integer','in:0,1']
         ]);
         
@@ -69,7 +79,7 @@ class AdminController extends Controller
         $user->role = $data['role'];
         $user->save();
 
-        return redirect()->route('admin.show')->with('success', 'User added successfully');
+        return redirect()->route('admin.manageuser')->with('success', 'User berhasil ditambahkan !');
     }
 
     public function edituser(Request $request)
@@ -88,7 +98,7 @@ class AdminController extends Controller
         $user->role = $data['role'];
         $user->save();
 
-        return redirect()->route('admin.show')->with('success', 'User successfully edited');
+        return redirect()->route('admin.manageuser')->with('success', 'User berhasil diedit');
     }
 
 
@@ -97,17 +107,17 @@ class AdminController extends Controller
         try{
             $user = User::findOrFail($userID);
 
-            if ($user->id == 1)
+            if ($user->idUser == 1)
             {
-                return redirect()->route('admin.show')->with('error', 'Default Admin cannot be deleted');
+                return redirect()->route('admin.manageuser')->with('error', 'Akun admin tidak bisa dihapus!');
             }
 
             $user->delete();
-            return redirect()->route('admin.show')->with('success', 'User deleted successfully');
+            return redirect()->route('admin.manageuser')->with('success', 'User berhasil terhapus!');
         }
         catch(Exception $e)
         {
-            return redirect()->route('admin.show')->with('error', 'User record not found');
+            return redirect()->route('admin.manageuser')->with('error', 'Record user tidak ditemukan !');
         }
     }
 }

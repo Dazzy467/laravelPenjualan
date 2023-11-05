@@ -43,6 +43,9 @@ class LoginController extends Controller
     {
         if ($user->role === 0) {
             return redirect()->route('admin.show');
+        }
+        else if ($user->role === 1) {
+            return redirect()->route('kasir.show');
         } else {
             return redirect($this->redirectTo); // Default path for other roles
         }

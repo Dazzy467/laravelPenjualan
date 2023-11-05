@@ -10,6 +10,7 @@ class Penjualan extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'penjualan';
+    protected $primaryKey = 'idPenjualan';
     protected $fillable = [
         'idNota',
         'jumlahBarang',
@@ -19,11 +20,11 @@ class Penjualan extends Model
 
     public function Nota()
     {
-        return $this->belongsTo(Nota::class,'idNota');
+        return $this->belongsTo(Nota::class,'idNota','idNota');
     }
     
     public function Barang()
     {
-        return $this->hasOne(Barang::class,'idBarang');
+        return $this->hasOne(Barang::class,'idBarang','idBarang');
     }
 }

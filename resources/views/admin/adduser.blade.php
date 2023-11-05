@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@section('nSB-content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -67,7 +67,8 @@
                             <div class="col-md-6">
                                 <select name="role" id="role" class="form-control @error('role') is-invalid @enderror" required>
                                     <option value="0">Admin</option>
-                                    <option value="1">User</option>
+                                    <option value="1">Kasir</option>
+                                    <option value="2">Manajemen Gudang</option>
                                 </select>
                                 @error('role')
                                     <span class="invalid-feedback" role="alert">
@@ -82,7 +83,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Add') }}
                                 </button>
-                                <a href="/admin" class="btn btn-primary">
+                                <a href="/admin/ManageUser" class="btn btn-primary">
                                     {{ __('Cancel') }}
                                 </a>
                             </div>

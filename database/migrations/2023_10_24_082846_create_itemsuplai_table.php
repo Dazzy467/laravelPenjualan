@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('itemsuplai', function (Blueprint $table) {
+            $table->bigIncrements('idItemSuplai');
             $table->foreignId('idSupplier')->constrained('supplier','idSupplier');
             $table->foreignId('idBarang')->constrained('barang','idBarang');
             $table->integer('jumlahBarang');

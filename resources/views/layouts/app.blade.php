@@ -14,13 +14,20 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Style -->
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <!-- <link rel="stylesheet" href="{{asset('/resources/css/app.css')}}"> -->
 
     <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <script src="https://kit.fontawesome.com/0181a7fc6f.js" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"></link>
+
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
 </head>
 <body>
     <div id="app">
@@ -88,66 +95,12 @@
             </div>                    
             
 
-            <div id="adminpanel">
-                @yield('adminpanel')
-                
-            </div>
-
-            <div id="userpanel">
+            <div id="content">
                 @yield('content')
+                
             </div>
             
-
-            <script>
-                const sidebar = $('#sidebar');
-                const toggleButton = $('#toggleSidebar');
-                const sidebarCollapse = $('#sidebarCollapse');
-                const labels = $('.nav-label');
-                const content = $('#adminpanel');
-                const sidebarToggleDiv = $("#sidebarToggleDiv");
-
-                var isLessWidth = false;
-                var isMinimized = false;
-                
-                $(document).ready(
-                    function()
-                    {
-                        toggleButton.click(function ()
-                        {
-                            content.toggleClass('content-minimized');
-                            labels.each(function(){
-                                $(this).toggleClass('nav-label-minimized');
-                            });
-                            sidebar.toggleClass('sidebar-collapsed');
-                            sidebarToggleDiv.toggleClass('justify-content-center justify-content-end');
-                            isMinimized = !isMinimized;
-                        })
-                        
-                        $(window).resize(function()
-                        {
-                            if ($(window).width() < 768 && !isLessWidth)
-                            {
-                                if (isMinimized)
-                                    sidebarToggleDiv.removeClass('d-flex justify-content-center pt-2');
-                                else sidebarToggleDiv.removeClass('d-flex justify-content-end pt-2');
-                                sidebarToggleDiv.css('display','none');
-                                $('#navlink').removeClass('mt-5');
-                                console.log('Hello');
-                                isLessWidth = true;
-                            }
-                            else if ($(window).width() > 768 && isLessWidth){
-                                if (isMinimized)
-                                    sidebarToggleDiv.addClass('d-flex justify-content-center pt-2');
-                                else 
-                                    sidebarToggleDiv.addClass('d-flex justify-content-end pt-2');
-                                $('#navlink').addClass('mt-5');
-                                isLessWidth = false;
-                            }
-                        });
-                    }
-                );
-
-            </script>
+            @yield('nSB-content')
         </main>
     </div>
 </body>
