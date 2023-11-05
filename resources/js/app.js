@@ -110,7 +110,7 @@ function TambahBarangKeTransaksi()
                     data.JumlahBarang,
                     data.HargaSatuan,
                     data.SubTotal,
-                    '<div class="d-flex justify-content-center"><div><a id="transactionDeleteRowBtn" href="#" class="fa-solid fa-trash-can text-danger" style="font-size: 24px;"></a></div></div>'
+                    '<td><div class="d-flex justify-content-center"><div><a type="button" id="transactionDeleteRowBtn" href="#" class="fa-solid fa-trash-can text-danger" style="font-size: 24px;"></a></div></div></td>',
                 ];
 
                 // Menambahkan baris baru ke tabel
@@ -129,7 +129,7 @@ function HapusBarangTransaksi()
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         type: "POST",
-        url: "/kasir/TambahBarangKeTransaksi",
+        url: "/kasir/HapusBarangTransaksi",
         data: {
             token : '<?php echo csrf_token() ?>'
         },
@@ -168,7 +168,7 @@ $(document).ready(
 
         $('#transactionDeleteRowBtn').click(function ()
         {
-            tabelTransaksi.row($(this).parents('tr')).remove().draw();
+            tabelTransaksi.row($(this).parents('TR')).remove().draw();
         }
         );
 
