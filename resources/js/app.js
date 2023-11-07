@@ -43,10 +43,18 @@ let tabelTambahBarang = new DataTable('#tambahBarangTable',{
 
 let tabelRiwayatTransaksi = new DataTable('#riwayatTransaksiTable',
 {
-    dom: 'lfrtipB',
+    dom: 'lfrtpB',
     lengthMenu: [[5,10,-1],[5,10,'Semua']],
     buttons: [
-        'copy', 'excel', 'pdf'
+        'copy',
+        {
+            extend: 'excel',
+            title: 'Penjualan Natural Gypsum'
+        },
+        {
+            extend: 'pdf',
+            title: 'Penjualan Natural Gypsum'
+        }
     ],
     language: {
         url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
