@@ -43,10 +43,14 @@ let tabelTambahBarang = new DataTable('#tambahBarangTable',{
 
 let tabelRiwayatTransaksi = new DataTable('#riwayatTransaksiTable',
 {
+    dom: 'lfrtipB',
     lengthMenu: [[5,10,-1],[5,10,'Semua']],
+    buttons: [
+        'copy', 'excel', 'pdf'
+    ],
     language: {
         url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
-    }
+    },
 });
 
 function BuatTransaksi()
