@@ -183,11 +183,6 @@ $(document).ready(
             row.remove();
         });
 
-        // $('#tambahBarangTransaksiForm').on('submit', function(e) {
-        //     e.preventDefault();
-        //     TambahBarangKeTransaksi();
-        // });
-
         $('#tambahBarangModal').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')
         });
