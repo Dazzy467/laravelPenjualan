@@ -60,55 +60,62 @@ class KasirController extends Controller
 
     public function tambahBarangKeTransaksi(Request $request)
     {
-
         $idBarang = $request->idBarang;
         $Barang = Barang::findOrFail($idBarang);
-        $HargaSatuan = $Barang->hargaBarang;
-        $JumlahBarang = $request->JumlahBarang;
-        $SubTotal = $Barang->hargaBarang * $JumlahBarang;
-
-        $penjualan = new Penjualan();
-        $this->newNota = unserialize($request->session()->get('newNota'));
-        $penjualan->idNota = $this->newNota->idNota;
-        $penjualan->idBarang = $idBarang;
-
-        $penjualan->jumlahBarang = $JumlahBarang;
-        $penjualan->totalHarga = $SubTotal;
-
-        // array_push($this->penjualanInstance,$penjualan);
-        if ($request->session()->has('penjualanInstance'))
+        if ($request->JumlahBarang <= $Barang->stokBarang)
         {
-            $this->penjualanInstance = $request->session()->get('penjualanInstance');
-            $isKetemu = false; 
+            $HargaSatuan = $Barang->hargaBarang;
+            $JumlahBarang = $request->JumlahBarang;
+            $SubTotal = $Barang->hargaBarang * $JumlahBarang;
 
-            
-            foreach($this->penjualanInstance as $valP)
+            $penjualan = new Penjualan();
+            $this->newNota = unserialize($request->session()->get('newNota'));
+            $penjualan->idNota = $this->newNota->idNota;
+            $penjualan->idBarang = $idBarang;
+
+            $penjualan->jumlahBarang = $JumlahBarang;
+            $penjualan->totalHarga = $SubTotal;
+
+            // array_push($this->penjualanInstance,$penjualan);
+            if ($request->session()->has('penjualanInstance'))
             {
-                if ($valP->idBarang == $penjualan->idBarang)
+                $this->penjualanInstance = $request->session()->get('penjualanInstance');
+                $isKetemu = false; 
+
+                
+                foreach($this->penjualanInstance as $valP)
                 {
-                    $valP->jumlahBarang += $penjualan->jumlahBarang;
-                    $JumlahBarang = $valP->jumlahBarang;
-                    $SubTotal = $Barang->hargaBarang * $JumlahBarang;
-                    $valP->totalHarga = $SubTotal;
-                    $isKetemu = true;
+                    if ($valP->idBarang == $penjualan->idBarang)
+                    {
+                        if (($Barang->stokBarang - ($valP->jumlahBarang + $penjualan->jumlahBarang)) >= 0)
+                        {
+                            $valP->jumlahBarang += $penjualan->jumlahBarang;
+                            $JumlahBarang = $valP->jumlahBarang;
+                            $SubTotal = $Barang->hargaBarang * $JumlahBarang;
+                            $valP->totalHarga = $SubTotal;
+                            $isKetemu = true;
+                        }
+                        else return response()->json(NULL,500);
+                    }
+                    
+                }
+                if ($isKetemu == false)
+                {
+                    $this->penjualanInstance[] = $penjualan;
                 }
                 
+                $request->session()->put('penjualanInstance',$this->penjualanInstance);
+
+                return response()->json(array('Barang' => $Barang,'JumlahBarang' => $JumlahBarang,'HargaSatuan' => $HargaSatuan,'SubTotal' => $SubTotal),200);
+
             }
-            if ($isKetemu == false)
-            {
-                $this->penjualanInstance[] = $penjualan;
-            }
-            
+            $this->penjualanInstance[] = $penjualan;
             $request->session()->put('penjualanInstance',$this->penjualanInstance);
-
+            $this->penjualanInstance = [];
             return response()->json(array('Barang' => $Barang,'JumlahBarang' => $JumlahBarang,'HargaSatuan' => $HargaSatuan,'SubTotal' => $SubTotal),200);
-
         }
-        $this->penjualanInstance[] = $penjualan;
-        $request->session()->put('penjualanInstance',$this->penjualanInstance);
-        $this->penjualanInstance = [];
-        return response()->json(array('Barang' => $Barang,'JumlahBarang' => $JumlahBarang,'HargaSatuan' => $HargaSatuan,'SubTotal' => $SubTotal),200);
-        
+        return response()->json(NULL,500);
+
     }
 
     public function hapusBarangTransaksi(Request $request)

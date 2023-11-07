@@ -118,6 +118,11 @@ function TambahBarangKeTransaksi()
             }
 
 
+        },
+        error: function()
+        {
+            alert('Error, Inputan melebihi stok barang!');
+            
         }
     });
 }
