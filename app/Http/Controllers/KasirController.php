@@ -16,11 +16,20 @@ class KasirController extends Controller
     protected $newNota;
     protected $penjualanInstance = [];
 
+
+
     public function dashboard()
     {
         $Barang = Barang::all();
         
         return view('Kasir.dashboard',['Barang' => $Barang]);
+    }
+
+    public function cekRiwayatTransaksi()
+    {
+        $Nota = Nota::all();
+        
+        return view('Kasir.riwayatTransaksi',['Nota' => $Nota]);
     }
 
     public function cekStokBarang()

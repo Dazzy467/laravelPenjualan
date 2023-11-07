@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth', 'role:0']], function () {
 
 Route::group(['middleware' => ['auth','role:1']], function() {
     Route::get('/kasir',[App\Http\Controllers\KasirController::class,'dashboard'])->name('kasir.show');
+    Route::get('/kasir/cekRiwayatTransaksi',[App\Http\Controllers\KasirController::class,'cekRiwayatTransaksi'])->name('kasir.cekRiwayatTrans');
     Route::get('/kasir/stokBarang',[\App\Http\Controllers\KasirController::class,'cekStokBarang'])->name('kasir.cekStok');
     Route::post('/kasir/BuatTransaksi',[\App\Http\Controllers\KasirController::class,'buatTransaksi']);
     Route::post('/kasir/TambahBarangKeTransaksi',[\App\Http\Controllers\KasirController::class,'tambahBarangKeTransaksi']);

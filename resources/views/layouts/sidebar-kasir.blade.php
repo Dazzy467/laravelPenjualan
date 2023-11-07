@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li class="row">
-                    <a href="{{ route('kasir.show')}}" class="btn btn-primary d-flex align-items-center mt-3" style="text-decoration: none;">
+                    <a href="{{ route('kasir.cekRiwayatTrans')}}" class="btn btn-primary d-flex align-items-center mt-3" style="text-decoration: none;">
                         <span class="text-white col nav-label" style="text-align: start;font-weight: bolder; font-size:14px;">Riwayat Transaksi</span>
                         <i class="fa-regular fa-clipboard text-white col-2 nav-icon" style="font-size: 32px; padding-left: 2px;"></i>
                     </a>

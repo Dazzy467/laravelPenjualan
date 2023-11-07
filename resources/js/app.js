@@ -41,7 +41,13 @@ let tabelTambahBarang = new DataTable('#tambahBarangTable',{
     dom: 'ftp'
 });
 
-
+let tabelRiwayatTransaksi = new DataTable('#riwayatTransaksiTable',
+{
+    lengthMenu: [[5,10,-1],[5,10,'Semua']],
+    language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
+    }
+});
 
 function BuatTransaksi()
 {

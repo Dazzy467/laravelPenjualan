@@ -27,23 +27,47 @@
                             {{session('error')}}
                         </div>
                     @endif
-                    <div class="d-flex justify-content-between ps-2 pe-2">
-                        <div class="card rounded bg-danger col-3 overflow-hidden">
-                            <a href="{{__('admin/Dummy')}}">
-                                <div class="text-center text-white pt-2" style="font-weight: 600;">
-                                    Dummy
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <i class="fa-solid fa-user text-white" style="font-size: 32px; padding-left: 2px;"></i>
-                                        <div class="text-white ps-3" style="font-weight: 600;">
-                                            0 Dummy
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    
+
+                    <table id="riwayatTransaksiTable" class="table table-striped table-hover" style="width: 100%;">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" class="text-center">No</th>
+                                <th scope="col">ID Nota</th>
+                                <th scope="col">Nama Kasir</th>
+                                <th scope="col">Tanggal Pembelian</th>
+                                <th scope="col">Total Harga</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $no = 1;
+
+                            @endphp
+                            @foreach ($Nota as $val)
+                            <tr>
+                                <th scope="row" class="text-center">{{$no}}</th>
+                                <td>{{$val->idNota}}</td>
+                                <td>{{$val->User->name}}</td>
+                                <td>{{$val->tanggalPembelian}}</td>
+                                <td>
+                                    @php
+                                        $totalHarga = 0;
+                                        foreach($val->Penjualan as $penjualan)
+                                        {
+                                            $totalHarga += $penjualan->totalHarga;
+                                        }
+                                        echo $totalHarga;
+                                    @endphp
+                                    </td>
+                            </tr>
+                            @php
+                                $no++;
+                            @endphp
+                            @endforeach
+                        </tbody>
+                    </table>
+
                 </div>
             </div>    
         </div>
