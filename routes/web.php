@@ -40,4 +40,6 @@ Route::group(['middleware' => ['auth','role:1']], function() {
     Route::post('/kasir/BuatTransaksi',[\App\Http\Controllers\KasirController::class,'buatTransaksi']);
     Route::post('/kasir/TambahBarangKeTransaksi',[\App\Http\Controllers\KasirController::class,'tambahBarangKeTransaksi']);
     Route::get('/kasir/simpanTransaksi',[\App\Http\Controllers\KasirController::class,'simpanTransaksi']);
+    Route::post('/kasir/HapusBarangTransaksi',[\App\Http\Controllers\KasirController::class,'hapusBarangTransaksi']);
+
 });

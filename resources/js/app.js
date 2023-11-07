@@ -118,12 +118,18 @@ function TambahBarangKeTransaksi()
             }
 
 
+        },
+        error: function()
+        {
+            alert('Error, Inputan melebihi stok barang!');
+            
         }
     });
 }
 
-function HapusBarangTransaksi()
+function HapusBarangTransaksi(namaBarang)
 {
+    console.log("ini: " + namaBarang);
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -131,11 +137,12 @@ function HapusBarangTransaksi()
         type: "POST",
         url: "/kasir/HapusBarangTransaksi",
         data: {
+            namaBarang: namaBarang,
             token : '<?php echo csrf_token() ?>'
         },
         dataType: 'json',
         success: function (data) {
-
+            console.log(data.instance);
         }
     });
 }
@@ -166,16 +173,15 @@ $(document).ready(
             TambahBarangKeTransaksi();
         });
 
-        $('#transactionDeleteRowBtn').click(function ()
-        {
-            tabelTransaksi.row($(this).parents('TR')).remove().draw();
-        }
-        );
-
-        // $('#tambahBarangTransaksiForm').on('submit', function(e) {
-        //     e.preventDefault();
-        //     TambahBarangKeTransaksi();
-        // });
+        $('#transactionTable tbody').on('click', '#transactionDeleteRowBtn', function(){
+            
+            // var row = $(this).closest('tr');
+            var row = tabelTransaksi.row($(this).parents('tr'));
+            var data = row.data();
+            console.log(data[0]); // ini akan mencetak data dari baris tersebut ke konsol
+            HapusBarangTransaksi(data[0]);
+            row.remove().draw();
+        });
 
         $('#tambahBarangModal').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')
