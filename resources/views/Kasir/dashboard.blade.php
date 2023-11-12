@@ -136,6 +136,9 @@
 
                             </tbody>
                         </table>
+                        <div class="d-flex justify-content-end">
+                            <h3 id="labelTotalHarga" class="pt-2 pb-2"></h3>
+                        </div>
                         <div class="d-flex">
                             <div>
                                 <button type="button" id="btnTambahBarangTransaksi" class="btn btn-primary disabled" data-bs-toggle="modal" data-bs-target="#tambahBarangModal" style="color: white; font-weight: bold;">Tambah barang</button>

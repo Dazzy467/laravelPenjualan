@@ -168,6 +168,7 @@ function HapusBarangTransaksi(namaBarang)
 $(document).ready(
     function()
     {
+        // Tombol hide/show navbar
         toggleButton.click(function ()
         {
             content.toggleClass('content-minimized');
@@ -179,18 +180,21 @@ $(document).ready(
             isMinimized = !isMinimized;
         })
 
-
+        // klik tombol buat transaksi
         $('#btnBuatTransaksi').click(
             function () { 
                 
                 BuatTransaksi();
             }
         );
-
+        
+        // Klik tombol submit tambah barang
         $('#btnSubmitTambahBarangTransaksiKasir').click(function () {
             TambahBarangKeTransaksi();
         });
 
+
+        // Klik tombol delete pada tabel transaksi
         $('#transactionTable tbody').on('click', '#transactionDeleteRowBtn', function(){
             
             // var row = $(this).closest('tr');
@@ -201,9 +205,22 @@ $(document).ready(
             row.remove().draw();
         });
 
+        // buat fokusin ke modal tambah barang (Kurang paham)
         $('#tambahBarangModal').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')
         });
+
+
+        //Update total harga di page transaksi
+        tabelTransaksi.on('draw',function () {
+            var Total = 0;
+            tabelTransaksi.rows().every(function(rowIdx,tableLoop,rowLoop){
+                var data = this.data();
+                Total += parseInt(data[3]);
+            });
+            $('#labelTotalHarga').html('Total Harga: ' + Total);
+        });
+        
         
         $(window).resize(function()
         {
