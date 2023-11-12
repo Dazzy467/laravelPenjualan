@@ -44,3 +44,15 @@ Route::group(['middleware' => ['auth','role:1']], function() {
     Route::post('/kasir/HapusBarangTransaksi',[\App\Http\Controllers\KasirController::class,'hapusBarangTransaksi']);
 
 });
+
+Route::group(['middleware' => ['auth','role:2']], function(){
+    Route::get('/gudang',[App\Http\Controllers\GudangController::class,'dashboard'])->name('gudang.show');
+    Route::get('/gudang/KelolaBarang',[App\Http\Controllers\GudangController::class,'kelolaBarang'])->name('gudang.kelolabarang');
+    Route::get('/gudang/EditBarang/{barang}',[App\Http\Controllers\GudangController::class,'editBarang_form'])->name('gudang.editbarangform');
+    Route::post('/gudang/EditBarang',[App\Http\Controllers\GudangController::class,'editBarang'])->name('gudang.editbarang');
+    Route::get('gudang/TambahBarangForm/',[App\Http\Controllers\GudangController::class,'addBarang_form']);
+    Route::post('gudang/TambahBarang',[App\Http\Controllers\GudangController::class,'addBarang'])->name('gudang.tambahbarang');
+    
+    Route::get('/gudang/DeleteBarang/{barang}',[App\Http\Controllers\GudangController::class,'deleteBarang']);
+
+});
