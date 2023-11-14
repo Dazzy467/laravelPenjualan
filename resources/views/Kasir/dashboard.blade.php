@@ -28,16 +28,28 @@
                         </div>
                     @endif
                     <div class="d-flex justify-content-between ps-2 pe-2">
-                        <div class="card rounded bg-danger col-3 overflow-hidden">
-                            <a href="{{__('admin/Dummy')}}">
+                        <div class="card rounded bg-primary col-3 overflow-hidden">
+                            <a href="#">
                                 <div class="text-center text-white pt-2" style="font-weight: 600;">
-                                    Dummy
+                                    Produk Terjual
                                 </div>
                                 <div class="card-body">
                                     <div class="d-flex justify-content-center">
-                                        <i class="fa-solid fa-user text-white" style="font-size: 32px; padding-left: 2px;"></i>
+                                        <i class="fa-solid fa-boxes-packing text-white" style="font-size: 32px; padding-left: 2px;"></i>
                                         <div class="text-white ps-3" style="font-weight: 600;">
-                                            0 Dummy
+                                            @php
+
+                                                
+                                                $totalProdukTerjual = 0;
+
+                                                foreach($Penjualan as $terjual)
+                                                {
+                                                    $totalProdukTerjual += $terjual->jumlahBarang;
+                                                }
+
+                                                
+                                            @endphp
+                                            {{ $totalProdukTerjual }} Produk
                                         </div>
                                     </div>
                                 </div>

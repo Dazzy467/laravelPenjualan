@@ -29,7 +29,7 @@
                         </div>
                     @endif
                     <div class="d-flex justify-content-between ps-2 pe-2">
-                        <div class="card rounded bg-warning col-3 overflow-hidden">
+                        <div class="card rounded bg-primary col-3 overflow-hidden">
                             <a href="#">
                                 <div class="text-center text-white pt-2" style="font-weight: 600;">
                                     Produk
@@ -48,7 +48,26 @@
                             </a>
                         </div>
 
-                        <div class="card rounded bg-success col-3 overflow-hidden">
+                        <div class="card rounded bg-primary col-3 overflow-hidden">
+                            <a href="#">
+                                <div class="text-center text-white pt-2" style="font-weight: 600;">
+                                    Supplier
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-center">
+                                        <i class="fa-solid fa-box text-white" style="font-size: 32px; padding-left: 2px;"></i>
+                                        <div class="text-white ps-3" style="font-weight: 600;">
+                                            @php
+                                                $totalSupplier = count($supplier);
+                                            @endphp
+                                            {{ $totalSupplier }} Supplier
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="card rounded bg-primary col-3 overflow-hidden">
                             <a href="#">
                                 <div class="text-center text-white pt-2" style="font-weight: 600;">
                                     Produk Terjual

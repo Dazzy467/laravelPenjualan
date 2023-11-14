@@ -21,8 +21,8 @@ class KasirController extends Controller
     public function dashboard()
     {
         $Barang = Barang::all();
-        
-        return view('Kasir.dashboard',['Barang' => $Barang]);
+        $Penjualan = Penjualan::all();
+        return view('Kasir.dashboard',['Barang' => $Barang,'Penjualan' => $Penjualan]);
     }
 
     public function cekRiwayatTransaksi()
