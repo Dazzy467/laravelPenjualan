@@ -68,7 +68,7 @@
                         </div>
 
                         <div class="card rounded bg-primary col-3 overflow-hidden">
-                            <a href="#">
+                            <a href="{{ route('admin.grafikPenjualan') }}">
                                 <div class="text-center text-white pt-2" style="font-weight: 600;">
                                     Produk Terjual
                                 </div>
