@@ -10,7 +10,7 @@ class Nota extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'nota';
-    protected $primaryKey = 'IdNota';
+    protected $primaryKey = 'idNota';
     protected $fillable = [
         'idNota',
         'idUser',

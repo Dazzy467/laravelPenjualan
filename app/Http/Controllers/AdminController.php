@@ -91,7 +91,7 @@ class AdminController extends Controller
         ]);
         
 
-        // Create a new user
+        // Edit user
         $user = User::find($request->input('id'));
         $user->name = $data['name'];
         $user->email = $data['email'];

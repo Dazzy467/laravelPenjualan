@@ -49,13 +49,26 @@ let tabelRiwayatTransaksi = new DataTable('#riwayatTransaksiTable',
         'copy',
         {
             extend: 'excel',
+            exportOptions:{
+                columns: ':not(:last-child)'
+            },
             title: 'Penjualan Natural Gypsum'
         },
         {
             extend: 'pdf',
+            exportOptions:{
+                columns: ':not(:last-child)'
+            },
             title: 'Penjualan Natural Gypsum'
         }
     ],
+    language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
+    },
+});
+
+let tabelSupplier = new DataTable('#supplierTable',{
+    lengthMenu: [[5,10,-1],[5,10,'Semua']],
     language: {
         url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
     },
@@ -221,6 +234,11 @@ $(document).ready(
             $('#labelTotalHarga').html('Total Harga: ' + Total);
         });
         
+        // $('#riwayatTransaksiTable').on('click', 'tr', function () {
+        //     var table = $('#riwayatTransaksiTable').DataTable();
+        //     var data = table.row( this ).data();
+        //     alert( 'ID Nota: '+ data[1] );
+        // });
         
         $(window).resize(function()
         {
