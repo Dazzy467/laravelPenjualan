@@ -24,7 +24,7 @@
                         </div>
                     @endif
 
-                    <div style="width: 100%" id="chartPenjualan">
+                    <div id="chartPenjualan">
                     </div>
                     <?= $lava->render('ColumnChart', 'Penjualan', 'chartPenjualan') ?>
                 </div>
