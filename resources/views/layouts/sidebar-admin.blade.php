@@ -1,4 +1,5 @@
 @section('sidebar')
+@vite(['resources/js/sidebar.js'])
     <!-- Sidebar -->
     <nav id="sidebar" class="sidebar position-fixed z-1 container bg-primary overflow-y-auto">
         <div id="sidebarToggleDiv" class="d-flex justify-content-end pt-2">
@@ -20,6 +21,25 @@
                         <span class="text-white col nav-label" style="text-align: start;font-weight: bolder; font-size:14px;">Dashboard</span>
                         <i class="fa-solid fa-table-columns text-white col-2 nav-icon" style="font-size: 32px;"></i>
                     </a>
+                </li>
+                <li class="row">
+                    <button class="btn btn-primary d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#pageDropdown" aria-expanded="false" style="text-decoration: none;">
+                        <span class="text-white col nav-label" style="text-align: start;font-weight: bolder; font-size:14px;">Halaman</span>
+                        <i class="fa-solid fa-chevron-right text-white col-2 nav-label" id="chevron" style="font-size: 12px;"></i>
+                    </button>
+
+                    <ul class="collapse list-unstyled" id="pageDropdown">
+                        <li class="list-group-item">
+                            <a href="{{route('kasir.show')}}" class="btn btn-primary d-flex align-items-center nav-label" style="text-decoration: none;">
+                                <span class="text-white col nav-label" style="text-align: start;font-weight: bolder; font-size:14px;">Kasir</span>
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{route('gudang.show')}}" class="btn btn-primary d-flex align-items-center nav-label" style="text-decoration: none;">
+                                <span class="text-white col nav-label" style="text-align: start;font-weight: bolder; font-size:14px;">Gudang</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <hr class="nav-label">
                 <div class="nav-label">
