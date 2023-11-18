@@ -96,7 +96,96 @@
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
+            
+            <div class="card bg-white shadow mt-2">
+                <div class="text-center pt-2">
+                    <h3>Catatan barang masuk</h3>
+                </div>
+                <div class="card-body">
+                    <table id="itemSuplaiTable" class="table table-striped table-hover" style="width: 100%;">
+                        <thead class="table-dark">
+                            <th scope="col" class="text-center">No</th>
+                            <th scope="col">Supplier</th>
+                            <th scope="col">Barang</th>
+                            <th scope="col">Jumlah masuk</th>
+                            <th scope="col">Tanggal masuk</th>
+                        </thead>
+                        <tbody>
+                            @php
+                                $no = 1;
+                            @endphp
+                            @foreach ($itemSuplai as $val)
+                                <tr>
+                                    <td scope="row" class="text-center">{{ $no }}</td>
+                                    <td>{{ $val->Supplier->nama }}</td>
+                                    <td>{{ $val->Barang->namaBarang }}</td>
+                                    <td>{{ $val->jumlahBarang }}</td>
+                                    <td>{{ $val->tanggalMasuk }}</td>
+                                </tr>
+                            @php
+                                $no++
+                            @endphp
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="d-flex">
+                        <button class="btn btn-primary" data-bs-target="#catatSupplaiModal" data-bs-toggle="modal">Catat barang masuk</button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="catatSupplaiModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Catat Suplai</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                        
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="text-center">
+                                        <p>Catat barang masuk!<br>Bila terjadi salah input silahkan perbaiki di kelola barang</p>
+                                    </div>
+                                    <div class="row mb-3 mt-2">
+                                        <label for="baranglist" class="col-md-4 col-form-label text-md-end">{{ __('Supplier') }}</label>
+                                        <div class="col-md-6">
+                                            <select name="idSupplier" id="idSupplier" class="form-control" required>
+                                                @foreach ($supplier as $val)
+                                                    <option value="{{ $val->idSupplier }}">{{ $val->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>                                   
+                                    <div class="row mb-3 mt-2">
+                                        <label for="baranglist" class="col-md-4 col-form-label text-md-end">{{ __('Barang') }}</label>
+                                        <div class="col-md-6">
+                                            <select name="idBarang" id="baranglist" class="form-control @error('barang') is-invalid @enderror" required>
+                                                @foreach ($produk as $val)
+                                                    <option value="{{ $val->idBarang }}">{{ $val->namaBarang }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3 mt-2">
+                                        <label for="inputjumlahBarang" class="col-md-4 col-form-label text-md-end">{{ __('Jumlah') }}</label>
+                                        <div class="col-md-6">
+                                            <input id="inputjumlahBarang" type="number" class="form-control @error('jumlah') is-invalid @enderror" name="jumlahBarang"  required>
+                                        </div>
+                                    </div>
+                               
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+                                    <button id="btnSubmitCatatSuplai" type="button" class="btn btn-primary">Catat</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

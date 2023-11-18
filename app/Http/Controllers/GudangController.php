@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\ItemSuplai;
 use App\Models\Penjualan;
 use App\Models\Supplier;
 use Exception;
@@ -17,7 +18,22 @@ class GudangController extends Controller
         $barang = Barang::all();
         $penjualan = Penjualan::all();
         $supplier = Supplier::all();
-        return view('Gudang/dashboard',['produk' => $barang,'penjualan' => $penjualan,'supplier' => $supplier]);
+        $itemSuplai = ItemSuplai::all();
+        return view('Gudang/dashboard',['produk' => $barang,'penjualan' => $penjualan,'supplier' => $supplier,'itemSuplai' => $itemSuplai]);
+    }
+
+    public function catatSuplai(Request $request)
+    {
+        $itemSuplai = new ItemSuplai();
+        $itemSuplai->idSupplier = $request->idSupplier;
+        $itemSuplai->idBarang = $request->idBarang;
+        $itemSuplai->jumlahBarang = $request->JumlahBarang;
+        $itemSuplai->tanggalMasuk = now();
+        $itemSuplai->save();
+
+
+        $itemSuplai = ItemSuplai::find($itemSuplai->idItemSuplai);
+        return response()->json(array('no' => ItemSuplai::count(),'namaSupplier' => $itemSuplai->Supplier->nama,'namaBarang' => $itemSuplai->Barang->namaBarang,'jumlahBarang' => $itemSuplai->jumlahBarang,'tanggalMasuk' => $itemSuplai->tanggalMasuk),200);
     }
 
     public function kelolaBarang()

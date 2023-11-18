@@ -74,6 +74,13 @@ let tabelSupplier = new DataTable('#supplierTable',{
     },
 });
 
+let tabelCatatanSupplier = new DataTable('#itemSuplaiTable',{
+    lengthMenu: [[5,10,-1],[5,10,'Semua']],
+    language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
+    }
+});
+
 function BuatTransaksi()
 {
     $.ajax({
@@ -147,6 +154,49 @@ function TambahBarangKeTransaksi()
                 // Menambahkan baris baru ke tabel
                 tabelTransaksi.row.add(baris_baru).draw();
             }
+
+
+        },
+        error: function()
+        {
+            alert('Error, Inputan melebihi stok barang!');
+            
+        }
+    });
+}
+
+function CatatItemSuplai()
+{
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        url: "/gudang/catatSuplai",
+        data: {
+            idSupplier: $('#idSupplier').val(),
+            idBarang : $('#baranglist').val(),
+            JumlahBarang : $('#inputjumlahBarang').val(),
+            token : '<?php echo csrf_token() ?>'
+        },
+        dataType: 'json',
+        success: function (data)
+        {
+            // Mendapatkan data dari tabel
+            var dataTabel = tabelCatatanSupplier.rows().data();
+
+            // Membuat baris baru
+            var baris_baru = [
+                '<td scope="row"><div class="text-center">' + data.no + '</div></td>',
+                data.namaSupplier,
+                data.namaBarang,
+                data.jumlahBarang,
+                data.tanggalMasuk
+            ];
+
+            // // Menambahkan baris baru ke tabel
+            tabelCatatanSupplier.row.add(baris_baru).draw();
+        
 
 
         },
@@ -233,6 +283,11 @@ $(document).ready(
             });
             $('#labelTotalHarga').html('Total Harga: ' + Total);
         });
+
+        // Tombol catat barang masuk
+        $('#btnSubmitCatatSuplai').on('click',function () {
+            CatatItemSuplai();
+        })
         
         // $('#riwayatTransaksiTable').on('click', 'tr', function () {
         //     var table = $('#riwayatTransaksiTable').DataTable();
