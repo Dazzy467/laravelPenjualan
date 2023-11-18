@@ -32,6 +32,8 @@ Route::group(['middleware' => ['auth', 'role:0']], function () {
     Route::get('/EditUser/{user}', [App\Http\Controllers\AdminController::class, 'edituser_form'])->name('admin.edituser_form');
     Route::post('/EditUser', [App\Http\Controllers\AdminController::class, 'edituser'])->name('admin.edituser');
     Route::get('/DeleteUser/{user}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('admin.deleteuser');
+
+    Route::get('/admin/grafikPenjualan', [App\Http\Controllers\AdminController::class, 'grafikPenjualan'])->name('admin.grafikPenjualan');
 });
 
 Route::group(['middleware' => ['auth','role:1']], function() {
@@ -42,7 +44,24 @@ Route::group(['middleware' => ['auth','role:1']], function() {
     Route::post('/kasir/TambahBarangKeTransaksi',[\App\Http\Controllers\KasirController::class,'tambahBarangKeTransaksi']);
     Route::get('/kasir/simpanTransaksi',[\App\Http\Controllers\KasirController::class,'simpanTransaksi']);
     Route::post('/kasir/HapusBarangTransaksi',[\App\Http\Controllers\KasirController::class,'hapusBarangTransaksi']);
+});
 
+Route::group(['middleware' => ['auth','role:2']], function(){
+    Route::get('/gudang',[App\Http\Controllers\GudangController::class,'dashboard'])->name('gudang.show');
+    
+    Route::get('/gudang/KelolaBarang',[App\Http\Controllers\GudangController::class,'kelolaBarang'])->name('gudang.kelolabarang');
+    Route::get('/gudang/EditBarang/{barang}',[App\Http\Controllers\GudangController::class,'editBarang_form'])->name('gudang.editbarangform');
+    Route::post('/gudang/EditBarang',[App\Http\Controllers\GudangController::class,'editBarang'])->name('gudang.editbarang');
+    Route::get('gudang/TambahBarangForm/',[App\Http\Controllers\GudangController::class,'addBarang_form']);
+    Route::post('gudang/TambahBarang',[App\Http\Controllers\GudangController::class,'addBarang'])->name('gudang.tambahbarang');
+    Route::get('/gudang/DeleteBarang/{barang}',[App\Http\Controllers\GudangController::class,'deleteBarang']);
+
+    Route::get('/gudang/KelolaSupplier',[App\Http\Controllers\GudangController::class,'kelolaSupplier'])->name('gudang.kelolasupplier');
+    Route::get('/gudang/TambahSupplierForm',[App\Http\Controllers\GudangController::class,'addSupplier_form']);
+    Route::post('/gudang/TambahSupplier',[App\Http\Controllers\GudangController::class,'addSupplier'])->name('gudang.tambahsupplier');
+    Route::get('/gudang/EditSupplier/{supplier}',[App\Http\Controllers\GudangController::class,'editSupplier_form']);
+    Route::post('/gudang/EditSupplier',[App\Http\Controllers\GudangController::class,'editSupplier'])->name('gudang.editsupplier');
+    Route::get('/gudang/DeleteSupplier/{supplier}',[App\Http\Controllers\GudangController::class,'deleteSupplier']);
 });
 
 Route::group(['middleware' => ['auth','role:2']], function(){

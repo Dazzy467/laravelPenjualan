@@ -9,6 +9,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Khill\Lavacharts\Lavacharts;
+use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     //
@@ -42,6 +44,78 @@ class AdminController extends Controller
     {
         $user = User::all();
         return view('admin.manageuser',['user' => $user]);
+    }
+
+    public function grafikPenjualan()
+    {
+        $lava = new Lavacharts; 
+        // $finances = $lava->DataTable();
+
+        // $finances->addStringColumn('Year')
+        // ->addNumberColumn('Sales')
+        // ->addNumberColumn('Expenses')
+        // ->addRow(['16 Januari 2004', 1000, 400])
+        // ->addRow(['16 Januari 2005', 1170, 460])
+        // ->addRow(['16 Januari 2006', 660, 1120])
+        // ->addRow(['16 Januari 2007', 1030, 54]);
+
+        // $lava->ColumnChart('Finances', $finances, [
+        //     'title' => 'Company Performance',
+        //     'titleTextStyle' => [
+        //         'color'    => '#eb6b2c',
+        //         'fontSize' => 11
+        //     ],
+        //     'responsive' => true,
+        //     'events' => [
+        //         'ready' => 'function () {
+        //             if (!window.chartResized) {
+        //                 setTimeout(function () {
+        //                     window.dispatchEvent(new Event("resize"));
+        //                     window.chartResized = true;
+        //                 }, 200);
+        //             }
+        //         }'
+        //     ]
+        // ]);
+
+        $penjualan = $lava->DataTable();
+
+        $penjualan->addStringColumn('Barang')
+            ->addNumberColumn('Jumlah Terjual');
+
+        // Ambil data penjualan bulan ini
+        $dataPenjualan = DB::table('penjualan')
+            ->join('nota', 'penjualan.idNota', '=', 'nota.idNota')
+            ->join('barang', 'penjualan.idBarang', '=', 'barang.idBarang')
+            ->whereMonth('nota.tanggalPembelian', date('m'))
+            ->select('barang.namaBarang', DB::raw('SUM(penjualan.jumlahBarang) as total'))
+            ->groupBy('barang.namaBarang')
+            ->get();
+
+        // Tambahkan data penjualan ke tabel
+        foreach ($dataPenjualan as $data) {
+            $penjualan->addRow([$data->namaBarang, $data->total]);
+        }
+
+        $lava->ColumnChart('Penjualan', $penjualan, [
+            'title' => 'Penjualan Bulan Ini',
+            'titleTextStyle' => [
+                'color'    => '#eb6b2c',
+                'fontSize' => 14
+            ],
+            'responsive' => true,
+            'events' => [
+                        'ready' => 'function () {
+                            if (!window.chartResized) {
+                                setTimeout(function () {
+                                    window.dispatchEvent(new Event("resize"));
+                                    window.chartResized = true;
+                                }, 200);
+                            }
+                        }'
+                    ]
+        ]);
+        return view('admin.grafikPenjualan',['lava'=>$lava]);
     }
 
     public function adduser_form()
