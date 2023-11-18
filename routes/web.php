@@ -32,6 +32,8 @@ Route::group(['middleware' => ['auth', 'role:0']], function () {
     Route::get('/EditUser/{user}', [App\Http\Controllers\AdminController::class, 'edituser_form'])->name('admin.edituser_form');
     Route::post('/EditUser', [App\Http\Controllers\AdminController::class, 'edituser'])->name('admin.edituser');
     Route::get('/DeleteUser/{user}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('admin.deleteuser');
+
+    Route::get('/admin/grafikPenjualan', [App\Http\Controllers\AdminController::class, 'grafikPenjualan'])->name('admin.grafikPenjualan');
 });
 
 Route::group(['middleware' => ['auth','role:1']], function() {
@@ -42,7 +44,6 @@ Route::group(['middleware' => ['auth','role:1']], function() {
     Route::post('/kasir/TambahBarangKeTransaksi',[\App\Http\Controllers\KasirController::class,'tambahBarangKeTransaksi']);
     Route::get('/kasir/simpanTransaksi',[\App\Http\Controllers\KasirController::class,'simpanTransaksi']);
     Route::post('/kasir/HapusBarangTransaksi',[\App\Http\Controllers\KasirController::class,'hapusBarangTransaksi']);
-
 });
 
 Route::group(['middleware' => ['auth','role:2']], function(){

@@ -15,6 +15,15 @@
             </div>
             <!-- Nav link -->
             <ul id="navlink" class="container mt-5">
+                @if (Auth::user()->role == 0)
+                <li class="row">
+                    <a href="{{route('admin.show')}}" class="btn btn-primary d-flex align-items-center mb-2" style="text-decoration: none;">
+                        <span class="text-white col nav-label" style="text-align: start;font-weight: bolder; font-size:14px;">Kembali ke halaman Admin</span>
+                        <i class="fa-solid fa-toolbox text-white col-2 nav-icon" style="font-size: 32px;"></i>
+                    </a>
+                </li>
+                @endif
+
                 <li class="row">
                     <a href="{{route('kasir.show')}}" class="btn btn-primary d-flex align-items-center" style="text-decoration: none;">
                         <span class="text-white col nav-label" style="text-align: start;font-weight: bolder; font-size:14px;">Dashboard</span>

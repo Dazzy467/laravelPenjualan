@@ -1,6 +1,8 @@
 @extends('layouts.app')
-
-@section('nSB-content')
+@section('sidebar')
+    @include('layouts.sidebar-admin')
+@endsection
+@section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

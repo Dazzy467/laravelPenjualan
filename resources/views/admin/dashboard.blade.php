@@ -29,7 +29,7 @@
                         </div>
                     @endif
                     <div class="d-flex justify-content-between ps-2 pe-2">
-                        <div class="card rounded bg-danger col-3 overflow-hidden">
+                        <div class="card rounded bg-primary col-3 overflow-hidden">
                             <a href="{{__('admin/ManageUser')}}">
                                 <div class="text-center text-white pt-2" style="font-weight: 600;">
                                     User
@@ -48,7 +48,7 @@
                             </a>
                         </div>
 
-                        <div class="card rounded bg-warning col-3 overflow-hidden">
+                        <div class="card rounded bg-primary col-3 overflow-hidden">
                             <a href="#">
                                 <div class="text-center text-white pt-2" style="font-weight: 600;">
                                     Produk
@@ -67,8 +67,8 @@
                             </a>
                         </div>
 
-                        <div class="card rounded bg-success col-3 overflow-hidden">
-                            <a href="#">
+                        <div class="card rounded bg-primary col-3 overflow-hidden">
+                            <a href="{{ route('admin.grafikPenjualan') }}">
                                 <div class="text-center text-white pt-2" style="font-weight: 600;">
                                     Produk Terjual
                                 </div>
