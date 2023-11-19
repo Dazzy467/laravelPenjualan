@@ -62,4 +62,6 @@ Route::group(['middleware' => ['auth','role:2']], function(){
     Route::get('/gudang/EditSupplier/{supplier}',[App\Http\Controllers\GudangController::class,'editSupplier_form']);
     Route::post('/gudang/EditSupplier',[App\Http\Controllers\GudangController::class,'editSupplier'])->name('gudang.editsupplier');
     Route::get('/gudang/DeleteSupplier/{supplier}',[App\Http\Controllers\GudangController::class,'deleteSupplier']);
+
+    Route::post('/gudang/catatSuplai',[App\Http\Controllers\GudangController::class,'catatSuplai']);
 });
