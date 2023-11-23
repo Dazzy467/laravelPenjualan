@@ -127,6 +127,7 @@ class AdminController extends Controller
         return view('admin.pendapatan',['Nota' => $nota,'Suplai' => $supply]);
     }
 
+
     public function adduser_form()
     {
         return view('admin/adduser');
