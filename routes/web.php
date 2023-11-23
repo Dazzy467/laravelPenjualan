@@ -67,3 +67,10 @@ Route::group(['middleware' => ['auth','role:2']], function(){
 
     Route::post('/gudang/catatSuplai',[App\Http\Controllers\GudangController::class,'catatSuplai']);
 });
+
+Route::group(['middleware' => ['auth']],function()
+{
+    Route::get('api/data/getItemSuplai',[App\Http\Controllers\api\DataAPI::class,'getItemSuplai']);
+    Route::get('api/data/getNota',[App\Http\Controllers\api\DataAPI::class,'getNota']);
+
+});
