@@ -34,6 +34,8 @@ Route::group(['middleware' => ['auth', 'role:0']], function () {
     Route::get('/DeleteUser/{user}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('admin.deleteuser');
 
     Route::get('/admin/grafikPenjualan', [App\Http\Controllers\AdminController::class, 'grafikPenjualan'])->name('admin.grafikPenjualan');
+    Route::get('/admin/pendapatan', [App\Http\Controllers\AdminController::class, 'pendapatan'])->name('admin.pendapatan');
+    
 });
 
 Route::group(['middleware' => ['auth','role:1']], function() {

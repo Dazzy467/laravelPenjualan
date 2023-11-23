@@ -58,7 +58,7 @@
                     </a>
                 </li>
                 <li class="row">
-                    <a href="#" class="btn btn-primary d-flex align-items-center mt-3" style="text-decoration: none;">
+                    <a href="{{ route('admin.pendapatan') }}" class="btn btn-primary d-flex align-items-center mt-3" style="text-decoration: none;">
                         <span class="text-white col nav-label" style="text-align: start; font-weight: bolder; font-size:14px;">Pendapatan</span>
                         <i class="fa-solid fa-rupiah-sign text-white col-2 nav-icon" style="font-size: 32px; padding-left: 4px;"></i>
                     </a>

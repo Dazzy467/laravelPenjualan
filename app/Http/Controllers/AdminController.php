@@ -118,6 +118,11 @@ class AdminController extends Controller
         return view('admin.grafikPenjualan',['lava'=>$lava]);
     }
 
+    public function pendapatan()
+    {
+        return view('admin.pendapatan');
+    }
+
     public function adduser_form()
     {
         return view('admin/adduser');

@@ -5,9 +5,10 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Barang;
+use App\Models\User;
 use App\Models\Supplier;
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\Hash;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -21,6 +22,20 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@mail.com',
+            'password' => Hash::make('admin'),
+            'role' => 0
+        ]);
+
+        User::create([
+            'name' => 'David Yusuf',
+            'email' => 'david@mail.com',
+            'password' => Hash::make('12345'),
+            'role' => 1
+        ]);
+
         Barang::create([
             'namaBarang' => 'PVC',
             'stokBarang' => 0,
