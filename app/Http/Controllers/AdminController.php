@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\ItemSuplai;
 use App\Models\Penjualan;
 use App\Models\User;
+use App\Models\Nota;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -117,6 +119,14 @@ class AdminController extends Controller
         ]);
         return view('admin.grafikPenjualan',['lava'=>$lava]);
     }
+
+    public function pendapatan()
+    {
+        $nota = Nota::all();
+        $supply = ItemSuplai::all();
+        return view('admin.pendapatan',['Nota' => $nota,'Suplai' => $supply]);
+    }
+
 
     public function adduser_form()
     {

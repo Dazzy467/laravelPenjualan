@@ -16,7 +16,8 @@ class ItemSuplai extends Model
         'idSupplier',
         'idBarang',
         'jumlahBarang',
-        'tanggalMasuk'
+        'tanggalMasuk',
+        'totalKulakan'
     ];
 
     public function Barang()

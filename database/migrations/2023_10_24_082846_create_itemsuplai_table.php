@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('idBarang')->constrained('barang','idBarang');
             $table->integer('jumlahBarang');
             $table->date('tanggalMasuk');
-            
+            $table->integer('totalKulakan');
             
         });
     }
