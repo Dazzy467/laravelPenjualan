@@ -23,20 +23,21 @@ $(document).ready(function () {
     let EndDate = $('#EndDate');
     EndDate.val(formatDate(endOfMonth));
 
-    // Add event listener for input event
+    // Event input jika di clear
     StartDate.on('input', function() {
         if (this.value === '') {
             this.value = formatDate(startOfMonth);
         }
     });
 
+    // Event input jika di clear
     EndDate.on('input', function() {
         if (this.value === '') {
             this.value = formatDate(endOfMonth);
         }
     });
 
-    // Custom filtering function which will search data in column four between two values
+    // Fungsi filtering buat ngefilter kolom tabel indeks ke 0 yaitu kolom tanggal
     DataTable.ext.search.push(function (settings, data, dataIndex) {
         let min = new Date(StartDate.val());
         let max = new Date(EndDate.val());
@@ -53,7 +54,7 @@ $(document).ready(function () {
         return false;
     });
 
-    // DataTables initialisation
+    // Datatable
     let tabelPendapatan = new DataTable('#PendapatanTable',{
         lengthMenu: [[5,10,-1],[5,10,'Semua']],
         language: {
@@ -95,7 +96,7 @@ $(document).ready(function () {
         }
     });
 
-    // Refilter the table
+    // Refilter table nya
     document.querySelectorAll('#StartDate, #EndDate').forEach((el) => {
         el.addEventListener('change', () => {
             tabelPendapatan.draw(),
