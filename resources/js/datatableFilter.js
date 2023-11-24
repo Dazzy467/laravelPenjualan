@@ -15,17 +15,18 @@ function formatDate(date) {
 $(document).ready(function () {
     console.log( "ready!" );
     let now = new Date();
+    let startOfMonth = new Date(now.getFullYear(),now.getMonth(), 1);
     let endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
     let StartDate = $('#StartDate');
-    StartDate.val(formatDate(now))
+    StartDate.val(formatDate(startOfMonth))
     let EndDate = $('#EndDate');
     EndDate.val(formatDate(endOfMonth));
 
     // Add event listener for input event
     StartDate.on('input', function() {
         if (this.value === '') {
-            this.value = formatDate(now);
+            this.value = formatDate(startOfMonth);
         }
     });
 
