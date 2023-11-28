@@ -177,6 +177,7 @@ function CatatItemSuplai()
             idSupplier: $('#idSupplier').val(),
             idBarang : $('#baranglist').val(),
             JumlahBarang : $('#inputjumlahBarang').val(),
+            totalKulakan : $('#inputTotalKulakan').val(),
             token : '<?php echo csrf_token() ?>'
         },
         dataType: 'json',
@@ -191,7 +192,8 @@ function CatatItemSuplai()
                 data.namaSupplier,
                 data.namaBarang,
                 data.jumlahBarang,
-                data.tanggalMasuk
+                data.tanggalMasuk,
+                data.totalKulakan
             ];
 
             // // Menambahkan baris baru ke tabel

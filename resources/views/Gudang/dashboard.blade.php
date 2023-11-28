@@ -110,6 +110,7 @@
                             <th scope="col">Barang</th>
                             <th scope="col">Jumlah masuk</th>
                             <th scope="col">Tanggal masuk</th>
+                            <th scope="col">Total Kulakan</th>
                         </thead>
                         <tbody>
                             @php
@@ -122,6 +123,7 @@
                                     <td>{{ $val->Barang->namaBarang }}</td>
                                     <td>{{ $val->jumlahBarang }}</td>
                                     <td>{{ $val->tanggalMasuk }}</td>
+                                    <td>{{ $val->totalKulakan }}</td>
                                 </tr>
                             @php
                                 $no++
@@ -172,6 +174,13 @@
                                         <label for="inputjumlahBarang" class="col-md-4 col-form-label text-md-end">{{ __('Jumlah') }}</label>
                                         <div class="col-md-6">
                                             <input id="inputjumlahBarang" type="number" class="form-control @error('jumlah') is-invalid @enderror" name="jumlahBarang"  required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3 mt-2">
+                                        <label for="inputTotalKulakan" class="col-md-4 col-form-label text-md-end">{{ __('Total kulakan') }}</label>
+                                        <div class="col-md-6">
+                                            <input id="inputTotalKulakan" type="number" class="form-control @error('TotalKulakan') is-invalid @enderror" name="totalKulakan"  required>
                                         </div>
                                     </div>
                                

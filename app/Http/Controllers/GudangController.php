@@ -29,11 +29,12 @@ class GudangController extends Controller
         $itemSuplai->idBarang = $request->idBarang;
         $itemSuplai->jumlahBarang = $request->JumlahBarang;
         $itemSuplai->tanggalMasuk = now();
+        $itemSuplai->totalKulakan = $request->totalKulakan;
         $itemSuplai->save();
 
 
         $itemSuplai = ItemSuplai::find($itemSuplai->idItemSuplai);
-        return response()->json(array('no' => ItemSuplai::count(),'namaSupplier' => $itemSuplai->Supplier->nama,'namaBarang' => $itemSuplai->Barang->namaBarang,'jumlahBarang' => $itemSuplai->jumlahBarang,'tanggalMasuk' => $itemSuplai->tanggalMasuk),200);
+        return response()->json(array('no' => ItemSuplai::count(),'namaSupplier' => $itemSuplai->Supplier->nama,'namaBarang' => $itemSuplai->Barang->namaBarang,'jumlahBarang' => $itemSuplai->jumlahBarang,'tanggalMasuk' => $itemSuplai->tanggalMasuk,'totalKulakan' => $itemSuplai->totalKulakan),200);
     }
 
     public function kelolaBarang()
