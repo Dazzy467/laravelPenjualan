@@ -55,6 +55,7 @@
                                     {{-- <th scope="col" class="text-center">No</th> --}}
                                     <th scope="col" class="text-center">Tanggal</th>
                                     <th scope="col" class="text-center">Pendapatan</th>
+                                    <th scope="col" class="text-center">Detail</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,6 +71,59 @@
                                                 }
                                                 echo $totalHarga;
                                             @endphp
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <button class="btn">
+                                                    <i class="fa-solid fa-circle-info text-primary" data-bs-toggle="modal" data-bs-target="#detailRiwayatModal{{$val->idNota}}" style="font-size: 24px"></i>
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="detailRiwayatModal{{$val->idNota}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Detail Transaksi idNota: {{ $val->idNota }}</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                                                    
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <table id="detailRiwayatTransaksiTable" class="table table-striped table-hover" style="width: 100%;">
+                                                                    <thead class="table-dark">
+                                                                        <tr>
+                                                                            <th scope="col" class="text-center">No</th>
+                                                                            <th scope="col">Barang</th>
+                                                                            <th scope="col">Jumlah</th>
+                                                                            <th scope="col">Harga barang</th>
+                                                                            <th scope="col">Subtotal</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @php
+                                                                            $nos = 1;
+                                                                        @endphp
+                                                                        @foreach ($val->Penjualan as $Penjualans)
+                                                                        <tr>
+                                                                            <th scope="row" class="text-center">{{$nos}}</th>
+                                                                            <td>{{$Penjualans->Barang->namaBarang}}</td>
+                                                                            <td>{{$Penjualans->jumlahBarang}}</td>
+                                                                            <td>{{$Penjualans->Barang->hargaBarang}}</td>
+                                                                            <td>{{$Penjualans->totalHarga}}</td>
+                                                                        </tr>
+                                                                        @php
+                                                                            $nos++;
+                                                                        @endphp
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

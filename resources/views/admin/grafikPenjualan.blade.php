@@ -24,9 +24,16 @@
                         </div>
                     @endif
 
-                    <div id="chartPenjualan">
+                    <div class="mt-2">
+
+                        <div id="chartPenjualan">
+                            <?= $lava->render('ColumnChart', 'Penjualan Bulan Ini', 'chartPenjualan') ?>
+                        </div>
+                        <div id="chartPenjualan2" class="mt-2">
+                            <?= $lava->render('ColumnChart', 'Penjualan Tahun Ini', 'chartPenjualan2') ?>
+                        </div>
+
                     </div>
-                    <?= $lava->render('ColumnChart', 'Penjualan', 'chartPenjualan') ?>
                 </div>
             </div>
         </div>

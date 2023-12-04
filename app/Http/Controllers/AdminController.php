@@ -24,24 +24,16 @@ class AdminController extends Controller
         $penjualan = Penjualan::all();
         return view('admin/dashboard',['user' => $user,'produk' => $barang,'penjualan' => $penjualan]);
     }
-
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'confirmed'],
-            'role' => ['required','integer','in:0,1']
-        ]);
-    }
-
+    
+     protected function validator(array $data)
+     {
+         return Validator::make($data, [
+             'name' => ['required', 'string', 'max:255'],
+             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+             'password' => ['required', 'string', 'confirmed'],
+             'role' => ['required', 'integer', 'in:0,1']
+         ]);
+     }
     public function manageuser()
     {
         $user = User::all();
@@ -51,11 +43,13 @@ class AdminController extends Controller
     public function grafikPenjualan()
     {
         $lava = new Lavacharts; 
-        $penjualan = $lava->DataTable();
-        $penjualan->addStringColumn('Barang')
+
+        // Monthly Chart
+        $penjualanBulanIni = $lava->DataTable();
+        $penjualanBulanIni->addStringColumn('Barang')
             ->addNumberColumn('Jumlah Terjual');
         // Ambil data penjualan bulan ini
-        $dataPenjualan = DB::table('penjualan')
+        $dataPenjualanBulanIni = DB::table('penjualan')
             ->join('nota', 'penjualan.idNota', '=', 'nota.idNota')
             ->join('barang', 'penjualan.idBarang', '=', 'barang.idBarang')
             ->whereMonth('nota.tanggalPembelian', date('m'))
@@ -63,32 +57,69 @@ class AdminController extends Controller
             ->groupBy('barang.namaBarang')
             ->get();
 
-        // Tambahkan data penjualan ke tabel
-        foreach ($dataPenjualan as $data) {
-            $penjualan->addRow([$data->namaBarang, $data->total]);
+        // Tambahkan data penjualan bulan ini ke tabel
+        foreach ($dataPenjualanBulanIni as $data) {
+            $penjualanBulanIni->addRow([$data->namaBarang, $data->total]);
         }
 
-        $lava->ColumnChart('Penjualan', $penjualan, [
-            'title' => 'Penjualan Bulan Ini',
+        $lava->ColumnChart('Penjualan Bulan Ini', $penjualanBulanIni, [
+            'title' => 'Penjualan bulan ini',
             'titleTextStyle' => [
                 'color'    => '#eb6b2c',
                 'fontSize' => 14
             ],
             'responsive' => true,
             'events' => [
-                        'ready' => 'function () {
-                            if (!window.chartResized) {
-                                setTimeout(function () {
-                                    window.dispatchEvent(new Event("resize"));
-                                    window.chartResized = true;
-                                }, 200);
-                            }
-                        }'
-                    ]
+                'ready' => 'function () {
+                    if (!window.chartResized) {
+                        setTimeout(function () {
+                            window.dispatchEvent(new Event("resize"));
+                            window.chartResized = true;
+                        }, 200);
+                    }
+                }'
+            ]
         ]);
-        return view('admin.grafikPenjualan',['lava'=>$lava]);
-    }
 
+        // Yearly Chart
+        $penjualanTahunIni = $lava->DataTable();
+        $penjualanTahunIni->addStringColumn('Barang')
+            ->addNumberColumn('Jumlah Terjual');
+        // Ambil data penjualan tahun ini
+        $dataPenjualanTahunIni = DB::table('penjualan')
+            ->join('nota', 'penjualan.idNota', '=', 'nota.idNota')
+            ->join('barang', 'penjualan.idBarang', '=', 'barang.idBarang')
+            ->whereYear('nota.tanggalPembelian', date('Y'))
+            ->select('barang.namaBarang', DB::raw('SUM(penjualan.jumlahBarang) as total'))
+            ->groupBy('barang.namaBarang')
+            ->get();
+
+        // Tambahkan data penjualan tahun ini ke tabel
+        foreach ($dataPenjualanTahunIni as $data) {
+            $penjualanTahunIni->addRow([$data->namaBarang, $data->total]);
+        }
+
+        $lava->ColumnChart('Penjualan Tahun Ini', $penjualanTahunIni, [
+            'title' => 'Penjualan tahun ini',
+            'titleTextStyle' => [
+                'color'    => '#eb6b2c',
+                'fontSize' => 14
+            ],
+            'responsive' => true,
+            'events' => [
+                'ready' => 'function () {
+                    if (!window.chartResized) {
+                        setTimeout(function () {
+                            window.dispatchEvent(new Event("resize"));
+                            window.chartResized = true;
+                        }, 200);
+                    }
+                }'
+            ]
+        ]);
+
+        return view('admin.grafikPenjualan', ['lava' => $lava]);
+    }
     public function pendapatan()
     {
         $nota = Nota::all();
