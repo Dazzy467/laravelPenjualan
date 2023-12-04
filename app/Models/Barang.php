@@ -10,7 +10,7 @@ class Barang extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'barang';
-
+    protected $primaryKey = 'idBarang';
     protected $fillable = [
         'namaBarang',
         'stokBarang',
@@ -19,6 +19,11 @@ class Barang extends Model
 
     public function itemSuplai()
     {
-        return $this->belongsTo(ItemSuplai::class,'idBarang');
+        return $this->belongsTo(ItemSuplai::class,'idBarang','idBarang');
+    }
+
+    public function Penjualan()
+    {
+        return $this->belongsTo(Penjualan::class,'idBarang','idBarang');
     }
 }

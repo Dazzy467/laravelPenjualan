@@ -22,7 +22,11 @@ class check_role
 
         else {
             if ($roles == 0 && Auth::user()->role != $roles)
-                return redirect()->route('home')->with('error', 'Hanya admin yang boleh masuk');
+            {
+                if(Auth::user()->role == 1)
+                    return redirect()->route('kasir.show')->with('error', 'Hanya admin yang boleh masuk');
+            }
+                
             else if ($roles == 1 && Auth::user()->role != $roles)
                 return redirect()->route('home')->with('error', 'Hanya kasir yang boleh masuk');
             else if ($roles == 2 && Auth::user()->role != $roles)

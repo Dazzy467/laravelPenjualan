@@ -1,11 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Barang;
+use App\Models\ItemSuplai;
+use App\Models\Penjualan;
 use App\Models\User;
+use App\Models\Nota;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Khill\Lavacharts\Lavacharts;
+use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     //
@@ -13,26 +20,113 @@ class AdminController extends Controller
     {
         // Logic for the admin dashboard
         $user = User::all();
-        
-        return view('admin/dashboard',['user' => $user]);
+        $barang = Barang::all();
+        $penjualan = Penjualan::all();
+        return view('admin/dashboard',['user' => $user,'produk' => $barang,'penjualan' => $penjualan]);
     }
-
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    
+     protected function validator(array $data)
+     {
+         return Validator::make($data, [
+             'name' => ['required', 'string', 'max:255'],
+             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+             'password' => ['required', 'string', 'confirmed'],
+             'role' => ['required', 'integer', 'in:0,1']
+         ]);
+     }
+    public function manageuser()
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required','integer','in:0,1']
-        ]);
+        $user = User::all();
+        return view('admin.manageuser',['user' => $user]);
     }
+
+    public function grafikPenjualan()
+    {
+        $lava = new Lavacharts; 
+
+        // Monthly Chart
+        $penjualanBulanIni = $lava->DataTable();
+        $penjualanBulanIni->addStringColumn('Barang')
+            ->addNumberColumn('Jumlah Terjual');
+        // Ambil data penjualan bulan ini
+        $dataPenjualanBulanIni = DB::table('penjualan')
+            ->join('nota', 'penjualan.idNota', '=', 'nota.idNota')
+            ->join('barang', 'penjualan.idBarang', '=', 'barang.idBarang')
+            ->whereMonth('nota.tanggalPembelian', date('m'))
+            ->select('barang.namaBarang', DB::raw('SUM(penjualan.jumlahBarang) as total'))
+            ->groupBy('barang.namaBarang')
+            ->get();
+
+        // Tambahkan data penjualan bulan ini ke tabel
+        foreach ($dataPenjualanBulanIni as $data) {
+            $penjualanBulanIni->addRow([$data->namaBarang, $data->total]);
+        }
+
+        $lava->ColumnChart('Penjualan Bulan Ini', $penjualanBulanIni, [
+            'title' => 'Penjualan bulan ini',
+            'titleTextStyle' => [
+                'color'    => '#eb6b2c',
+                'fontSize' => 14
+            ],
+            'responsive' => true,
+            'events' => [
+                'ready' => 'function () {
+                    if (!window.chartResized) {
+                        setTimeout(function () {
+                            window.dispatchEvent(new Event("resize"));
+                            window.chartResized = true;
+                        }, 200);
+                    }
+                }'
+            ]
+        ]);
+
+        // Yearly Chart
+        $penjualanTahunIni = $lava->DataTable();
+        $penjualanTahunIni->addStringColumn('Barang')
+            ->addNumberColumn('Jumlah Terjual');
+        // Ambil data penjualan tahun ini
+        $dataPenjualanTahunIni = DB::table('penjualan')
+            ->join('nota', 'penjualan.idNota', '=', 'nota.idNota')
+            ->join('barang', 'penjualan.idBarang', '=', 'barang.idBarang')
+            ->whereYear('nota.tanggalPembelian', date('Y'))
+            ->select('barang.namaBarang', DB::raw('SUM(penjualan.jumlahBarang) as total'))
+            ->groupBy('barang.namaBarang')
+            ->get();
+
+        // Tambahkan data penjualan tahun ini ke tabel
+        foreach ($dataPenjualanTahunIni as $data) {
+            $penjualanTahunIni->addRow([$data->namaBarang, $data->total]);
+        }
+
+        $lava->ColumnChart('Penjualan Tahun Ini', $penjualanTahunIni, [
+            'title' => 'Penjualan tahun ini',
+            'titleTextStyle' => [
+                'color'    => '#eb6b2c',
+                'fontSize' => 14
+            ],
+            'responsive' => true,
+            'events' => [
+                'ready' => 'function () {
+                    if (!window.chartResized) {
+                        setTimeout(function () {
+                            window.dispatchEvent(new Event("resize"));
+                            window.chartResized = true;
+                        }, 200);
+                    }
+                }'
+            ]
+        ]);
+
+        return view('admin.grafikPenjualan', ['lava' => $lava]);
+    }
+    public function pendapatan()
+    {
+        $nota = Nota::all();
+        $supply = ItemSuplai::all();
+        return view('admin.pendapatan',['Nota' => $nota,'Suplai' => $supply]);
+    }
+
 
     public function adduser_form()
     {
@@ -43,9 +137,9 @@ class AdminController extends Controller
     {
         $user = User::findOrFail($userID);
 
-        if ($user->id == 1)
+        if ($user->idUser == 1)
         {
-            return redirect()->route('admin.show')->with('error', 'Default Admin cannot be edited');
+            return redirect()->route('admin.manageuser')->with('error', 'Akun admin tidak boleh diedit!');
 
         }
         return view('admin/edituser',['user' => $user]);
@@ -56,7 +150,7 @@ class AdminController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'confirmed'],
             'role' => ['required','integer','in:0,1']
         ]);
         
@@ -69,7 +163,7 @@ class AdminController extends Controller
         $user->role = $data['role'];
         $user->save();
 
-        return redirect()->route('admin.show')->with('success', 'User added successfully');
+        return redirect()->route('admin.manageuser')->with('success', 'User berhasil ditambahkan !');
     }
 
     public function edituser(Request $request)
@@ -81,14 +175,14 @@ class AdminController extends Controller
         ]);
         
 
-        // Create a new user
+        // Edit user
         $user = User::find($request->input('id'));
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->role = $data['role'];
         $user->save();
 
-        return redirect()->route('admin.show')->with('success', 'User successfully edited');
+        return redirect()->route('admin.manageuser')->with('success', 'User berhasil diedit');
     }
 
 
@@ -97,17 +191,17 @@ class AdminController extends Controller
         try{
             $user = User::findOrFail($userID);
 
-            if ($user->id == 1)
+            if ($user->idUser == 1)
             {
-                return redirect()->route('admin.show')->with('error', 'Default Admin cannot be deleted');
+                return redirect()->route('admin.manageuser')->with('error', 'Akun admin tidak bisa dihapus!');
             }
 
             $user->delete();
-            return redirect()->route('admin.show')->with('success', 'User deleted successfully');
+            return redirect()->route('admin.manageuser')->with('success', 'User berhasil terhapus!');
         }
         catch(Exception $e)
         {
-            return redirect()->route('admin.show')->with('error', 'User record not found');
+            return redirect()->route('admin.manageuser')->with('error', 'Record user tidak ditemukan !');
         }
     }
 }

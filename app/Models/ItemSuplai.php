@@ -10,21 +10,23 @@ class ItemSuplai extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'itemsuplai';
-
+    protected $primaryKey = 'idItemSuplai';
     protected $fillable = [
+
         'idSupplier',
         'idBarang',
         'jumlahBarang',
-        'tanggalMasuk'
+        'tanggalMasuk',
+        'totalKulakan'
     ];
 
     public function Barang()
     {
-        return $this->hasOne(Barang::class,'idBarang');
+        return $this->hasOne(Barang::class,'idBarang','idBarang');
     }
 
     public function Supplier()
     {
-        return $this->hasOne(Supplier::class,'idSupplier');
+        return $this->hasOne(Supplier::class,'idSupplier','idSupplier');
     }
 }

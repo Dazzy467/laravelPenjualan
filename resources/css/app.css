@@ -22,7 +22,7 @@ body .sidebar-collapsed
     transition: width 0.3s;
 }
 
-body main #adminpanel
+body main #content
 {
     margin-top: 56px; 
     margin-left: 320px; 
@@ -30,7 +30,7 @@ body main #adminpanel
     transition: 0.3s;
 }
 
-body main #adminpanel.content-minimized
+body main #content.content-minimized
 {
     margin-top: 56px; 
     margin-left: 90px; 
@@ -48,6 +48,13 @@ body main #adminpanel.content-minimized
     display: none;
 }
 
+*:disabled {
+    background-color: dimgrey;
+    color: linen;
+    opacity: 1;
+  }
+  
+
 @media (max-width:768px)
 {
     body .sidebar
@@ -59,7 +66,7 @@ body main #adminpanel.content-minimized
         display: none;
     }
 
-    body main #adminpanel
+    body main #content
     {
         margin-top: 56px; 
         margin-left: 90px; 

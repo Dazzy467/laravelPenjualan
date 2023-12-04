@@ -1,26 +1,26 @@
 @extends('layouts.app')
 @section('sidebar')
-    @include('layouts.sidebar-admin')
+    @include('layouts.sidebar-gudang')
 @endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Edit user') }}</div>
+                <div class="card-header">{{ __('Edit Barang') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.edituser') }}">
+                    <form method="POST" action="{{ route('gudang.editbarang') }}">
                         @csrf
-                        <input type="hidden" id="id" name="id" value="{{$user->id}}">
+                        <input type="hidden" id="id" name="idBarang" value="{{$Barang->idBarang}}">
 
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                            <label for="namaBarang" class="col-md-4 col-form-label text-md-end">{{ __('Nama barang') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus>
+                                <input id="namaBarang" type="text" class="form-control @error('namaBarang') is-invalid @enderror" name="namaBarang" value="{{ $Barang->namaBarang }}" required autofocus>
 
-                                @error('name')
+                                @error('namaBarang')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -29,12 +29,12 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                            <label for="stokBarang" class="col-md-4 col-form-label text-md-end">{{ __('Stok barang') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email">
+                                <input id="stokBarang" type="number" class="form-control @error('stokBarang') is-invalid @enderror" name="stokBarang" value="{{ $Barang->stokBarang }}" required>
 
-                                @error('email')
+                                @error('stokBarang')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -42,16 +42,13 @@
                             </div>
                         </div>
 
-                        <!-- Role selection dropdown -->
                         <div class="row mb-3">
-                            <label for="role" class="col-md-4 col-form-label text-md-end">{{ __('Role') }}</label>
+                            <label for="hargaBarang" class="col-md-4 col-form-label text-md-end">{{ __('Harga barang') }}</label>
+
                             <div class="col-md-6">
-                                <select name="role" id="role" class="form-control @error('role') is-invalid @enderror" required>
-                                    <option value="0">Admin</option>
-                                    <option value="1">Kasir</option>
-                                    <option value="2">Manajemen Gudang</option>
-                                </select>
-                                @error('role')
+                                <input id="hargaBarang" type="number" class="form-control @error('hargaBarang') is-invalid @enderror" name="hargaBarang" value="{{ $Barang->hargaBarang }}" required>
+
+                                @error('hargaBarang')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -64,7 +61,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Edit') }}
                                 </button>
-                                <a href="/admin/ManageUser" class="btn btn-primary">
+                                <a href="/gudang/KelolaBarang" class="btn btn-primary">
                                     {{ __('Cancel') }}
                                 </a>
                             </div>

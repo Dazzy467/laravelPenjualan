@@ -11,6 +11,7 @@ class Supplier extends Model
     public $timestamps = false;
 
     protected $table = 'supplier';
+    protected $primaryKey = 'idSupplier';
 
     protected $fillable = [
         'nama',
@@ -20,6 +21,6 @@ class Supplier extends Model
 
     public function ItemSuplai()
     {
-        return $this->hasMany(ItemSuplai::class,'idSupplier');
+        return $this->hasMany(ItemSuplai::class,'idSupplier','idSupplier');
     }
 }
