@@ -51,40 +51,9 @@ class AdminController extends Controller
     public function grafikPenjualan()
     {
         $lava = new Lavacharts; 
-        // $finances = $lava->DataTable();
-
-        // $finances->addStringColumn('Year')
-        // ->addNumberColumn('Sales')
-        // ->addNumberColumn('Expenses')
-        // ->addRow(['16 Januari 2004', 1000, 400])
-        // ->addRow(['16 Januari 2005', 1170, 460])
-        // ->addRow(['16 Januari 2006', 660, 1120])
-        // ->addRow(['16 Januari 2007', 1030, 54]);
-
-        // $lava->ColumnChart('Finances', $finances, [
-        //     'title' => 'Company Performance',
-        //     'titleTextStyle' => [
-        //         'color'    => '#eb6b2c',
-        //         'fontSize' => 11
-        //     ],
-        //     'responsive' => true,
-        //     'events' => [
-        //         'ready' => 'function () {
-        //             if (!window.chartResized) {
-        //                 setTimeout(function () {
-        //                     window.dispatchEvent(new Event("resize"));
-        //                     window.chartResized = true;
-        //                 }, 200);
-        //             }
-        //         }'
-        //     ]
-        // ]);
-
         $penjualan = $lava->DataTable();
-
         $penjualan->addStringColumn('Barang')
             ->addNumberColumn('Jumlah Terjual');
-
         // Ambil data penjualan bulan ini
         $dataPenjualan = DB::table('penjualan')
             ->join('nota', 'penjualan.idNota', '=', 'nota.idNota')
