@@ -1,6 +1,6 @@
 @section('sidebar')
     <!-- Sidebar -->
-    <nav id="sidebar" class="sidebar position-fixed z-1 container bg-primary overflow-y-auto">
+    <nav id="sidebar" class="sidebar position-fixed z-1 bg-primary overflow-y-auto ps-2 pe-2 pb-2">
         <div id="sidebarToggleDiv" class="d-flex justify-content-end pt-2">
             <button id="toggleSidebar" class="btn btn-primary toggle-button">
                 <i class="fa-solid fa-bars text-white" style="font-size: 24px;"></i>
