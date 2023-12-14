@@ -45,6 +45,8 @@
                                     <td>Admin</td>
                                 @elseif ($val->role == 1)
                                     <td>Kasir</td>
+                                @elseif ($val->role == 2)
+                                    <td>Gudang</td>
                                 @endif
                                 <td>
                                     <div class="d-flex justify-content-center">

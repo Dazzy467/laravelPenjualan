@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.edituser') }}">
                         @csrf
-                        <input type="hidden" id="id" name="id" value="{{$user->id}}">
+                        <input type="hidden" id="id" name="id" value="{{$user->idUser}}">
 
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>

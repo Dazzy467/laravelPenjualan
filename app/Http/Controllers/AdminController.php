@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Khill\Lavacharts\Lavacharts;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 class AdminController extends Controller
 {
     //
@@ -151,7 +152,7 @@ class AdminController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'confirmed'],
-            'role' => ['required','integer','in:0,1']
+            'role' => ['required','integer','in:0,1,2']
         ]);
         
 
@@ -168,15 +169,23 @@ class AdminController extends Controller
 
     public function edituser(Request $request)
     {
+
+        $idUser = $request->input('id');
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'role' => ['required','integer','in:0,1']
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users')->ignore($idUser,'idUser')
+            ],
+            'role' => ['required','integer','in:0,1,2']
         ]);
         
-
+        
         // Edit user
-        $user = User::find($request->input('id'));
+        $user = User::find($idUser);
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->role = $data['role'];

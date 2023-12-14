@@ -56,17 +56,53 @@ $(document).ready(function () {
 
     // Datatable
     let tabelPendapatan = new DataTable('#PendapatanTable',{
-        lengthMenu: [[5,10,-1],[5,10,'Semua']],
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
-        }
-    });
-
-    let tabelPengeluaran = new DataTable('#PengeluaranTable',{
+        dom: 'lfrtpB',
         lengthMenu: [[5,10,-1],[5,10,'Semua']],
         language: {
             url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
         },
+        buttons: [
+            'copy',
+            {
+                extend: 'excel',
+                exportOptions:{
+                    columns: ':not(:last-child)'
+                },
+                title: 'Penjualan Natural Gypsum'
+            },
+            {
+                extend: 'pdf',
+                exportOptions:{
+                    columns: ':not(:last-child)'
+                },
+                title: 'Penjualan Natural Gypsum'
+            }
+        ],
+    });
+
+    let tabelPengeluaran = new DataTable('#PengeluaranTable',{
+        dom: 'lfrtpB',
+        lengthMenu: [[5,10,-1],[5,10,'Semua']],
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
+        },
+        buttons: [
+            'copy',
+            {
+                extend: 'excel',
+                exportOptions:{
+                    columns: ':not(:last-child)'
+                },
+                title: 'Penjualan Natural Gypsum'
+            },
+            {
+                extend: 'pdf',
+                exportOptions:{
+                    columns: ':not(:last-child)'
+                },
+                title: 'Penjualan Natural Gypsum'
+            }
+        ],
         initComplete: function() {
             $('#PengeluaranTable_wrapper').hide();
         }
